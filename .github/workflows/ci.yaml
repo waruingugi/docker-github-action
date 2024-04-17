@@ -64,7 +64,7 @@ jobs:
                 # The name of the step
                 name: Checkout
                 # This will bring your code into the workflow environment
-                uses: actions@checkout@v4
+                uses: actions/checkout@v4
             # -
             #     name: Set up Docker Buildx
             #     uses: docker/setup-buildx-action@v3
