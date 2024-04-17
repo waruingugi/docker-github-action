@@ -36,7 +36,6 @@ jobs:
         env:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
-            POSTGRES_HOST: localhost
             POSTGRES_DB: tests
             SECRET_KEY: s0m£raNd0mf@Ke_key
             DEBUG: 0
