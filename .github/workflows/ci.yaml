@@ -69,7 +69,7 @@ jobs:
                 run: docker-compose up --build -d
             -
                 name: Run tests
-                run: docker-compose exec -T app ./scripts/test.sh
+                run: docker-compose exec -T -u admin app /scripts/test.sh
             -
                 name: Shutdown
                 run: docker-compose down
