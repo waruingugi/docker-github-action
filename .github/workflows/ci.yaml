@@ -33,12 +33,12 @@ jobs:
         #     matrix:
         #         python-version: ['3.10', '3.11']
         # Add in environment variables for the "build" job
-        env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: tests
-            SECRET_KEY: s0m£raNd0mf@Ke_key
-            DEBUG: 0
+        # env:
+        #     POSTGRES_USER: postgres
+        #     POSTGRES_PASSWORD: postgres
+        #     POSTGRES_DB: tests
+        #     SECRET_KEY: s0m£raNd0mf@Ke_key
+        #     DEBUG: 0
         # services:
         #     # The name of our service is "postgres" but can be set to anything else
         #     postgres:
@@ -69,7 +69,7 @@ jobs:
                 run: docker-compose up --build -d
             -
                 name: Run tests
-                run: docker-compose exec -T app /scripts/test.sh
+                run: docker-compose exec -T app python manage.py test
             -
                 name: Shutdown
                 run: docker-compose down
