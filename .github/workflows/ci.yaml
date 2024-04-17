@@ -1,0 +1,79 @@
+# Name of our workflow
+name: Django CI/CD Workflow
+
+# Triggers for our workflow
+on:
+    # Allows you to trigger this workflow manually from the Github Actions tab or through API calls
+    workflow_dispatch:
+    # Allows this workflow to run from another workflow within the repository
+    workflow_call:
+    # Opening a pull request to master and develop branch
+    pull_request:
+        branches:
+            - develop
+            - master
+    # Any code pushed to master, feature and develop branch
+    push:
+        branches:
+            - master
+            - develop
+            - feature
+
+# A workflow run in made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # This workflow contains a job called "build"
+    build:
+        # The type of runner that this job will run on
+        runs-on: ubuntu-latest
+        # Define how the matrix of jobs is created and executed.
+        # It can include multiple settings to control aspects such as job failures, job exclusions, .e.t.c
+        # strategy:
+        #     # Define a max of 4 jobs (1 OS x 2 python versions)
+        #     max-parallel: 4
+        #     matrix:
+        #         python-version: ['3.10', '3.11']
+        # Add in environment variables for the "build" job
+        # env:
+        #     POSTGRES_USER: postgres
+        #     POSTGRES_PASSWORD: postgres
+        #     POSTGRES_HOST: localhost
+        #     POSTGRES_DB: tests
+        #     SECRET_KEY: s0m£raNd0mf@Ke_key
+        #     DEBUG: 0
+        # services:
+        #     # The name of our service is "postgres" but can be set to anything else
+        #     postgres:
+        #         image: postgres:12
+        #         # Re-use environments already declared above
+        #         env:
+        #             POSTGRES_USER: ${{ env.POSTGRES_USER }}
+        #             POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        #             POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        #         # Expose the ports for application use
+        #         ports:
+        #             - 5432:5432
+        #         # Declare commands because postgres container does not provide a health check
+        #         options: >-
+        #             --health-cmd pg_isready
+        #             --health-interval 10s
+        #             --health-timeout 5s
+        #             --health-retries 5
+        
+        steps:
+            -
+                # The name of the step
+                name: Checkout
+                # This will bring your code into the workflow environment
+                uses: actions@checkout@v4
+            # -
+            #     name: Set up Docker Buildx
+            #     uses: docker/setup-buildx-action@v3
+            -
+                name: Build with Docker Compose
+                run: docker-compose up --build -d
+            -
+                name: Run tests
+                run: docker-compose exec app /scripts/test.sh
+            -
+                name: Shutdown
+                run: docker-compose down

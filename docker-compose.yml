@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:12
+    container_name: postgres-server
+    networks:
+      - githubactions-backend-network
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    image: app
+    networks:
+      - githubactions-backend-network
+    container_name: app-container
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+
+volumes:
+  db_data:
+
+networks:
+  githubactions-backend-network:
+    name: githubactions-backend-network
