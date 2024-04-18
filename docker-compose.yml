@@ -35,6 +35,7 @@ services:
       - POSTGRES_HOST=postgres-server
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     container_name: app-container
+    command: sh -c "python manage.py test"
     restart: always
     volumes:
       - .:/app
