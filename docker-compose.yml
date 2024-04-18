@@ -29,11 +29,11 @@ services:
     image: app
     networks:
       - githubactions-backend-network
-    environment: 
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_HOST=postgres-server
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    # environment: 
+    #   - POSTGRES_DB=${POSTGRES_DB}
+    #   - POSTGRES_USER=${POSTGRES_USER}
+    #   - POSTGRES_HOST=postgres-server
+    #   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     container_name: app-container
     command: tail -f /dev/null  # Keeps the container running
     volumes:
