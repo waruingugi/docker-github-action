@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: always
     volumes:
-      - db_data:/var/lib/postgresql/data/
+      - ./scripts/db.sql:/docker-entrypoint-initdb.d/db.sql
     ports:
       - "5432:5432"
     healthcheck:
@@ -35,15 +35,11 @@ services:
       - POSTGRES_HOST=postgres-server
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     container_name: app-container
-    command: sh -c "python manage.py test"
-    restart: always
+    command: tail -f /dev/null  # Keeps the container running
     volumes:
       - .:/app
     ports:
       - "8000:8000"
-
-volumes:
-  db_data:
 
 networks:
   githubactions-backend-network:
