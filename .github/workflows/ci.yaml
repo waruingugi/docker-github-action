@@ -39,6 +39,8 @@ jobs:
             POSTGRES_DB: tests
             SECRET_KEY: s0m£raNd0mf@Ke_key
             DEBUG: 0
+            DATABASE_URL: postgres://postgres:postgres@postgres-server:5432/tests
+            DATABASE_TEST_URL: postgres://postgres:postgres@postgres-server:5432/tests
         # services:
         #     # The name of our service is "postgres" but can be set to anything else
         #     postgres:
