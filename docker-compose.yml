@@ -34,6 +34,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_HOST=postgres-server
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-server:5432/${POSTGRES_DB}
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-server:5432/${POSTGRES_DB}
+      - DATABASE_TEST_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-server:5432/${POSTGRES_DB}
     container_name: app-container
     command: tail -f /dev/null  # Keeps the container running
     volumes:
